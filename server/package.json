@@ -1,0 +1,16 @@
+{
+  "name": "tic-tac-toe-server",
+  "version": "0.1.0",
+  "description": "Server for tic-tac-toe",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Nick Breland",
+  "license": "GPL-3.0-or-later",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.18.2",
+    "socket.io": "^4.5.3"
+  }
+}

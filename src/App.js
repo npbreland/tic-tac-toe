@@ -3,7 +3,12 @@ import { Board } from './Board';
 import { Row } from './Row';
 import { Cell } from './Cell';
 import { GameOver } from './GameOver';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
+import io from "socket.io-client";
+
+const socket = io.connect('http://localhost:3001');
+const params = new URLSearchParams(window.location.search);
+const myPlayer = params.get('player');
 
 const App = () => {
 
@@ -20,19 +25,33 @@ const App = () => {
   };
 
   const addPlayerToCell = (cellIndex) => {
+    if (activePlayer !== myPlayer) {
+      return false;
+    }
     if (winner) {
       return false;
     }
     const cellContentsCopy = [...cellContents];
     cellContentsCopy[cellIndex] = activePlayer;
-    setCellContents(cellContentsCopy);
-    toggleActivePlayer();
+    socket.emit("I moved", {
+      cellContents: cellContentsCopy,
+    });
   }
 
-  const restart = () => {
+  const emitRestart = () => {
+    socket.emit("restart");
+  };
+
+  const handleRestart = () => {
     setWinner('');
     setCellContents(cellsAllEmpty);
+    setActivePlayer('X');
   };
+
+  const handleMove = useCallback(newCellContents => {
+    setCellContents(newCellContents);
+    toggleActivePlayer();
+  });
 
 
   useEffect(() => {
@@ -72,6 +91,13 @@ const App = () => {
     checkForWin();
   }, [cellContents]);
 
+  socket.on('player moved', handleMove);
+  socket.on('restarted', handleRestart);
+
+  if (!myPlayer) {
+    return  "You must provide a player (X or O)";
+  }
+
   return (
     <div className="App">
       <Board>
@@ -91,7 +117,7 @@ const App = () => {
         ))}
         </Row>
       </Board>
-      { winner && <GameOver winner={winner} restart={restart} /> }
+      { winner && <GameOver winner={winner} restart={emitRestart} /> }
     </div>
   );
 }
