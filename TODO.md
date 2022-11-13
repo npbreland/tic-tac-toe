@@ -8,4 +8,3 @@
 * Perhaps make the board bigger. [X]
 * Allow for draw. [X]
 * More pleasant colors [X]
-* Move cellContents => game state logic to game state custom hook
