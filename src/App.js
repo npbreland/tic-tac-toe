@@ -85,7 +85,7 @@ const App = () => {
    * one, returns the winner, else returns the empty string (default).
    *
    * @param {String[]} cellContents
-   * @return String winner
+   * @return {String} winner
    */
   const getWinner = cellContents => {
     const winningCombos = [
