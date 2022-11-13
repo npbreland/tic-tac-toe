@@ -1,22 +1,46 @@
 table, th, td {
-  border: 1px solid black;
+  border: 1px solid #4f4f4f;
+  border-radius: 10px;
   border-collapse: collapse;
 }
+
+.disabled {
+  pointer-events: none;
+}
+
+body {
+  background: #4f4f4f;
+  color: white;
+}
+
+button {
+  cursor: pointer;
+}
+
+.App {
+  position: relative;
+  top: 100px;
+}
+
 table {
+  color: #4f4f4f;
+  background-color: white;
+  margin: auto;
+  font-size: 24px;
 }
 
 tr {
-  height: 60px;
+  height: 120px;
 }
 
 td {
   text-align: center;
   cursor: pointer;
-  width: 60px;
+  width: 120px;
 }
 
-#game-over {
-  margin-top: 5px;
-  width: 190px;
+#message-box {
+  height: 80px;
+  font-size: 24px;
   text-align: center;
 }

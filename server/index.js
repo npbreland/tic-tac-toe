@@ -4,16 +4,14 @@ app.use(cors());
 const server = require('http').createServer(app);
 const io = require('socket.io')(server, {
   cors: {
-    origin: "http://localhost:3002"
+    origin: "http://localhost:3000"
   }
 });
 
 io.on('connection', client => {
-  client.on('I moved', data => {
-    const { cellContents } = data;
-    io.emit(`player moved`, cellContents);
+  client.on('state change', data => {
+    io.emit('state change', data);
   });
-  client.on('restart', () => io.emit('restarted'));
 });
 
 server.listen(3001, () => console.log('Server listening on 3001'));
